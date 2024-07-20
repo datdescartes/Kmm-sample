@@ -4,6 +4,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.skie)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -28,8 +32,39 @@ kotlin {
     }
     
     sourceSets {
-        commonMain.dependencies {
-            // put your Multiplatform dependencies here
+        val commonMain by getting {
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+            dependencies {
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.koin.core)
+                implementation(libs.androidx.room.runtime)
+                implementation(libs.sqlite.bundled)
+                api(libs.androidx.datastore.preferences.core)
+                api(libs.androidx.datastore.core.okio)
+                implementation(libs.okio)
+            }
+        }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.androidx.room.runtime.android)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+    }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
         }
     }
 }
@@ -43,5 +78,19 @@ android {
     }
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+    }
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata" ) {
+        dependsOn("kspCommonMainKotlinMetadata")
     }
 }
