@@ -5,8 +5,11 @@ import androidx.room.PrimaryKey
 import androidx.room.ColumnInfo
 
 @Entity(tableName = "Launch")
-data class LaunchEntity(
-    @PrimaryKey
+data class LaunchTable(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int = 0,
+
     @ColumnInfo(name = "flightNumber")
     val flightNumber: Int,
 

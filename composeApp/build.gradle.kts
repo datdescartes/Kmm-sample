@@ -28,7 +28,7 @@ kotlin {
             implementation(libs.androidx.compose.material3)
             implementation(libs.koin.androidx.compose)
             implementation(libs.koin.android)
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -39,6 +39,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(projects.shared)
             implementation(libs.koin.core)
+            implementation(libs.kotlinx.datetime)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

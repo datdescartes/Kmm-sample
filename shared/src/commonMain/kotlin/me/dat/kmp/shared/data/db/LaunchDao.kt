@@ -7,14 +7,14 @@ import androidx.room.Query
 @Dao
 interface LaunchDao {
     @Insert
-    suspend fun insert(launch: LaunchEntity)
+    suspend fun insert(launch: LaunchTable)
 
     @Insert
-    suspend fun insertAll(launches: List<LaunchEntity>)
+    suspend fun insertAll(launches: List<LaunchTable>)
 
     @Query("SELECT * FROM Launch WHERE flightNumber = :flightNumber")
-    suspend fun getLaunchByFlightNumber(flightNumber: Int): LaunchEntity?
+    suspend fun getLaunchByFlightNumber(flightNumber: Int): LaunchTable?
 
     @Query("SELECT * FROM Launch")
-    suspend fun getAllLaunches(): List<LaunchEntity>
+    suspend fun getAllLaunches(): List<LaunchTable>
 }

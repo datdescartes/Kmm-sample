@@ -1,13 +1,10 @@
 package me.dat.kmp.shared.data.network
 
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RocketLaunch(
+data class RocketLaunchDto(
     @SerialName("flight_number")
     val flightNumber: Int,
     @SerialName("name")
@@ -21,21 +18,19 @@ data class RocketLaunch(
     @SerialName("links")
     val links: Links
 ) {
-    var launchYear = Instant.parse(launchDateUTC).toLocalDateTime(TimeZone.UTC).year
+    @Serializable
+    data class Links(
+        @SerialName("patch")
+        val patch: Patch?,
+        @SerialName("article")
+        val article: String?
+    )
+
+    @Serializable
+    data class Patch(
+        @SerialName("small")
+        val small: String?,
+        @SerialName("large")
+        val large: String?
+    )
 }
-
-@Serializable
-data class Links(
-    @SerialName("patch")
-    val patch: Patch?,
-    @SerialName("article")
-    val article: String?
-)
-
-@Serializable
-data class Patch(
-    @SerialName("small")
-    val small: String?,
-    @SerialName("large")
-    val large: String?
-)
