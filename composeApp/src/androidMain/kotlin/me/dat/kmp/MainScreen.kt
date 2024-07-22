@@ -66,6 +66,8 @@ fun MainScreen() {
                     ) {
                         Text("Loading...", style = MaterialTheme.typography.bodyLarge)
                     }
+                } else if (state.error != null) {
+                    Text(state.error ?: "", style = MaterialTheme.typography.bodyLarge)
                 } else {
                     LazyColumn {
                         items(state.launches) { launch: RocketLaunchModel ->

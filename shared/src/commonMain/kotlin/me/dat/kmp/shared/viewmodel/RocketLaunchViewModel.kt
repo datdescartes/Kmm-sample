@@ -23,19 +23,20 @@ class RocketLaunchViewModel: ViewModel(), KoinComponent {
 
     fun loadLaunches() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, launches = emptyList())
+            _state.value = _state.value.copy(isLoading = true, launches = emptyList(), error = null)
             try {
                 val launches = repository.getAllLaunches(forceReload = true)
                 _state.value = _state.value.copy(isLoading = false, launches = launches)
             } catch (e: Exception) {
                 e.printStackTrace()
-                _state.value = _state.value.copy(isLoading = false, launches = emptyList())
+                _state.value = _state.value.copy(isLoading = false, launches = emptyList(), error = e.stackTraceToString())
             }
         }
     }
 
     data class UiState(
         val isLoading: Boolean = false,
+        val error: String? = null,
         val launches: List<RocketLaunchModel> = emptyList()
     )
 }
