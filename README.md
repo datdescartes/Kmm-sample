@@ -16,4 +16,8 @@ This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
 
-Ref. https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-ktor-sqldelight.html
+Ref. 
+
+[Create a multiplatform app using Ktor and SQLDelight](https://www.jetbrains.com/help/kotlin-multiplatform-dev/multiplatform-ktor-sqldelight.html)
+
+[kotlin-multiplatform-samples](https://github.com/android/kotlin-multiplatform-samples)
